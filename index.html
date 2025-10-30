@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ahad Hossain - Senior Laravel Developer</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      :root {
+        --primary: #6366f1;
+        --secondary: #8b5cf6;
+        --accent: #ec4899;
+        --dark: #0f172a;
+        --light: #f8fafc;
+        --gray: #64748b;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: var(--dark);
+        color: var(--light);
+        overflow-x: hidden;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+
+      /* Animated Background */
+      .bg-animation {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        overflow: hidden;
+      }
+
+      .bg-animation span {
+        position: absolute;
+        display: block;
+        width: 20px;
+        height: 20px;
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        animation: float 25s infinite;
+        opacity: 0.1;
+        border-radius: 50%;
+      }
+
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0) rotate(0deg);
+        }
+        50% {
+          transform: translateY(-100vh) rotate(360deg);
+        }
+      }
+
+      /* Navigation */
+      nav {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        background: rgba(15, 23, 42, 0.9);
+        backdrop-filter: blur(10px);
+        padding: 20px 0;
+        z-index: 1000;
+        transition: all 0.3s;
+      }
+
+      nav.scrolled {
+        padding: 15px 0;
+        box-shadow: 0 5px 30px rgba(99, 102, 241, 0.2);
+      }
+
+      nav .container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .logo {
+        font-size: 24px;
+        font-weight: bold;
+        background: linear-gradient(135deg, var(--primary), var(--accent));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 30px;
+        list-style: none;
+      }
+
+      .nav-links a {
+        color: var(--light);
+        text-decoration: none;
+        transition: all 0.3s;
+        position: relative;
+      }
+
+      .nav-links a::after {
+        content: "";
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background: linear-gradient(90deg, var(--primary), var(--accent));
+        transition: width 0.3s;
+      }
+
+      .nav-links a:hover::after {
+        width: 100%;
+      }
+
+      /* Hero Section */
+      .hero {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        padding-top: 80px;
+      }
+
+      .hero-content {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 60px;
+        align-items: center;
+      }
+
+      .hero-text h1 {
+        font-size: 56px;
+        margin-bottom: 20px;
+        background: linear-gradient(135deg, var(--primary), var(--accent));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        animation: fadeInUp 1s;
+      }
+
+      .hero-text h2 {
+        font-size: 28px;
+        color: var(--gray);
+        margin-bottom: 30px;
+        animation: fadeInUp 1s 0.2s both;
+      }
+
+      .hero-text p {
+        font-size: 18px;
+        line-height: 1.8;
+        color: var(--gray);
+        margin-bottom: 40px;
+        animation: fadeInUp 1s 0.4s both;
+      }
+
+      .cta-buttons {
+        display: flex;
+        gap: 20px;
+        animation: fadeInUp 1s 0.6s both;
+      }
+
+      .btn {
+        padding: 15px 35px;
+        border: none;
+        border-radius: 50px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: all 0.3s;
+        text-decoration: none;
+        display: inline-block;
+      }
+
+      .btn-primary {
+        background: linear-gradient(135deg, var(--primary), var(--accent));
+        color: white;
+        box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
+      }
+
+      .btn-primary:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 15px 40px rgba(99, 102, 241, 0.4);
+      }
+
+      .btn-secondary {
+        background: transparent;
+        color: var(--light);
+        border: 2px solid var(--primary);
+      }
+
+      .btn-secondary:hover {
+        background: var(--primary);
+        transform: translateY(-3px);
+      }
+
+      /* Profile Card */
+      .profile-card {
+        position: relative;
+        animation: fadeIn 1s 0.8s both;
+      }
+
+      .profile-image {
+        width: 400px;
+        height: 400px;
+        background: linear-gradient(135deg, var(--primary), var(--accent));
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 120px;
+        color: white;
+        box-shadow: 0 20px 60px rgba(99, 102, 241, 0.4);
+        animation: pulse 3s infinite;
+      }
+
+      @keyframes pulse {
+        0%,
+        100% {
+          box-shadow: 0 20px 60px rgba(99, 102, 241, 0.4);
+        }
+        50% {
+          box-shadow: 0 20px 80px rgba(236, 72, 153, 0.6);
+        }
+      }
+
+      /* Section Styles */
+      section {
+        padding: 100px 0;
+        opacity: 0;
+        transform: translateY(50px);
+        transition: all 0.8s;
+      }
+
+      section.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .section-title {
+        text-align: center;
+        font-size: 42px;
+        margin-bottom: 60px;
+        background: linear-gradient(135deg, var(--primary), var(--accent));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      /* Experience Timeline */
+      .timeline {
+        position: relative;
+        padding: 50px 0;
+      }
+
+      .timeline::before {
+        content: "";
+        position: absolute;
+        left: 50%;
+        top: 0;
+        height: 100%;
+        width: 2px;
+        background: linear-gradient(180deg, var(--primary), var(--accent));
+      }
+
+      .timeline-item {
+        margin-bottom: 50px;
+        position: relative;
+      }
+
+      .timeline-item:nth-child(odd) .timeline-content {
+        margin-left: 0;
+        margin-right: calc(50% + 40px);
+        text-align: right;
+      }
+
+      .timeline-item:nth-child(even) .timeline-content {
+        margin-left: calc(50% + 40px);
+      }
+
+      .timeline-content {
+        background: rgba(99, 102, 241, 0.1);
+        padding: 30px;
+        border-radius: 15px;
+        border: 1px solid rgba(99, 102, 241, 0.2);
+        transition: all 0.3s;
+      }
+
+      .timeline-content:hover {
+        transform: scale(1.05);
+        box-shadow: 0 10px 40px rgba(99, 102, 241, 0.3);
+      }
+
+      .timeline-content h3 {
+        color: var(--primary);
+        margin-bottom: 10px;
+        font-size: 22px;
+      }
+
+      .timeline-content h4 {
+        color: var(--gray);
+        margin-bottom: 15px;
+        font-size: 16px;
+      }
+
+      .timeline-content ul {
+        list-style: none;
+        margin-top: 15px;
+      }
+
+      .timeline-content ul li {
+        margin-bottom: 10px;
+        padding-left: 20px;
+        position: relative;
+      }
+
+      .timeline-content ul li::before {
+        content: "▹";
+        position: absolute;
+        left: 0;
+        color: var(--accent);
+      }
+
+      .timeline-dot {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 20px;
+        height: 20px;
+        background: linear-gradient(135deg, var(--primary), var(--accent));
+        border-radius: 50%;
+        top: 30px;
+        box-shadow: 0 0 20px rgba(99, 102, 241, 0.6);
+      }
+
+      /* Skills Section */
+      .skills-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 30px;
+      }
+
+      .skill-card {
+        background: rgba(99, 102, 241, 0.1);
+        padding: 30px;
+        border-radius: 15px;
+        border: 1px solid rgba(99, 102, 241, 0.2);
+        transition: all 0.3s;
+        cursor: pointer;
+      }
+
+      .skill-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 40px rgba(99, 102, 241, 0.3);
+        border-color: var(--primary);
+      }
+
+      .skill-card h3 {
+        color: var(--primary);
+        margin-bottom: 15px;
+        font-size: 20px;
+      }
+
+      .skill-card ul {
+        list-style: none;
+      }
+
+      .skill-card ul li {
+        margin-bottom: 10px;
+        color: var(--gray);
+        padding-left: 20px;
+        position: relative;
+      }
+
+      .skill-card ul li::before {
+        content: "•";
+        position: absolute;
+        left: 0;
+        color: var(--accent);
+        font-size: 20px;
+      }
+
+      /* Projects Section */
+      .projects-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: 30px;
+      }
+
+      .project-card {
+        background: rgba(99, 102, 241, 0.1);
+        border-radius: 15px;
+        overflow: hidden;
+        border: 1px solid rgba(99, 102, 241, 0.2);
+        transition: all 0.3s;
+        cursor: pointer;
+      }
+
+      .project-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 50px rgba(99, 102, 241, 0.3);
+      }
+
+      .project-header {
+        background: linear-gradient(135deg, var(--primary), var(--accent));
+        padding: 30px;
+        font-size: 24px;
+        font-weight: bold;
+      }
+
+      .project-body {
+        padding: 30px;
+      }
+
+      .project-body p {
+        color: var(--gray);
+        line-height: 1.6;
+      }
+
+      /* Contact Section */
+      .contact-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 30px;
+        margin-top: 50px;
+      }
+
+      .contact-card {
+        background: rgba(99, 102, 241, 0.1);
+        padding: 40px;
+        border-radius: 15px;
+        text-align: center;
+        border: 1px solid rgba(99, 102, 241, 0.2);
+        transition: all 0.3s;
+      }
+
+      .contact-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 40px rgba(99, 102, 241, 0.3);
+      }
+
+      .contact-icon {
+        font-size: 48px;
+        margin-bottom: 20px;
+      }
+
+      .contact-card h3 {
+        color: var(--primary);
+        margin-bottom: 10px;
+      }
+
+      .contact-card a {
+        color: var(--gray);
+        text-decoration: none;
+        transition: color 0.3s;
+      }
+
+      .contact-card a:hover {
+        color: var(--accent);
+      }
+
+      /* Footer */
+      footer {
+        background: rgba(15, 23, 42, 0.9);
+        padding: 30px 0;
+        text-align: center;
+        color: var(--gray);
+      }
+
+      /* Animations */
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      /* Mobile Menu */
+      .mobile-menu-btn {
+        display: none;
+        font-size: 28px;
+        background: none;
+        border: none;
+        color: var(--light);
+        cursor: pointer;
+      }
+
+      /* Responsive */
+      @media (max-width: 768px) {
+        .hero-content {
+          grid-template-columns: 1fr;
+          text-align: center;
+        }
+
+        .hero-text h1 {
+          font-size: 36px;
+        }
+
+        .hero-text h2 {
+          font-size: 22px;
+        }
+
+        .profile-image {
+          width: 300px;
+          height: 300px;
+          font-size: 90px;
+          margin: 0 auto;
+        }
+
+        .cta-buttons {
+          justify-content: center;
+        }
+
+        .mobile-menu-btn {
+          display: block;
+        }
+
+        .nav-links {
+          position: fixed;
+          top: 70px;
+          left: -100%;
+          width: 100%;
+          background: rgba(15, 23, 42, 0.98);
+          flex-direction: column;
+          padding: 30px;
+          transition: left 0.3s;
+        }
+
+        .nav-links.active {
+          left: 0;
+        }
+
+        .timeline::before {
+          left: 0;
+        }
+
+        .timeline-item:nth-child(odd) .timeline-content {
+          margin-right: 0;
+          margin-left: 40px;
+          text-align: left;
+        }
+
+        .timeline-item:nth-child(even) .timeline-content {
+          margin-left: 40px;
+        }
+
+        .timeline-dot {
+          left: 0;
+          transform: translateX(-50%);
+        }
+
+        .projects-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Animated Background -->
+    <div class="bg-animation" id="bgAnimation"></div>
+
+    <!-- Navigation -->
+    <nav id="navbar">
+      <div class="container">
+        <div class="logo">AH</div>
+        <button class="mobile-menu-btn" onclick="toggleMenu()">☰</button>
+        <ul class="nav-links" id="navLinks">
+          <li><a href="#home" onclick="closeMenu()">Home</a></li>
+          <li><a href="#experience" onclick="closeMenu()">Experience</a></li>
+          <li><a href="#skills" onclick="closeMenu()">Skills</a></li>
+          <li><a href="#projects" onclick="closeMenu()">Projects</a></li>
+          <li><a href="#contact" onclick="closeMenu()">Contact</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+      <div class="container">
+        <div class="hero-content">
+          <div class="hero-text">
+            <h1>Ahad Hossain</h1>
+            <h2>Senior Laravel Web Developer</h2>
+            <p>
+              Highly motivated and results-oriented Senior Laravel Web Developer
+              with over 7 years of experience building and maintaining dynamic
+              web applications. Expertise in Laravel framework, PHP, MySQL, and
+              front-end technologies.
+            </p>
+            <div class="cta-buttons">
+              <a href="#contact" class="btn btn-primary">Get In Touch</a>
+              <a href="#projects" class="btn btn-secondary">View Projects</a>
+            </div>
+          </div>
+          <div class="profile-card">
+            <div class="profile-image">AH</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience">
+      <div class="container">
+        <h2 class="section-title">Experience</h2>
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <h3>Lead Software Developer</h3>
+              <h4>Bimafy | October 2021 - Present</h4>
+              <ul>
+                <li>
+                  Refactored and modernized legacy codebases, enhancing
+                  scalability and sustainability
+                </li>
+                <li>
+                  Designed and implemented innovative product configuration
+                  tools tailored to dynamic market needs
+                </li>
+                <li>
+                  Architected and maintained resilient RESTful APIs optimized
+                  for mobile applications
+                </li>
+                <li>
+                  Conducted regular progress assessments, risk analysis, and
+                  implemented proactive mitigation strategies
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <h3>Senior Web Developer</h3>
+              <h4>RAN Solutions | July 2020 - September 2021</h4>
+              <ul>
+                <li>
+                  Led full-stack Laravel development projects from concept to
+                  deployment
+                </li>
+                <li>
+                  Designed complex databases and maintained optimal workflows
+                </li>
+                <li>
+                  Integrated international/local payment gateways and SMS APIs
+                </li>
+                <li>
+                  Collaborated with Android/iOS developers for corporate client
+                  projects
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <h3>Web Developer</h3>
+              <h4>SA Websoft | May 2017 - March 2020</h4>
+              <ul>
+                <li>
+                  Developed and maintained web applications using CodeIgniter
+                </li>
+                <li>Designed relational databases and optimized workflows</li>
+                <li>
+                  Identified and resolved bugs, enhancing application usability
+                  and performance
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills">
+      <div class="container">
+        <h2 class="section-title">Skills & Expertise</h2>
+        <div class="skills-grid">
+          <div class="skill-card">
+            <h3>Back-end Development</h3>
+            <ul>
+              <li>PHP (Advanced)</li>
+              <li>Laravel Framework</li>
+              <li>CodeIgniter</li>
+              <li>RESTful API Development</li>
+            </ul>
+          </div>
+          <div class="skill-card">
+            <h3>Front-end Development</h3>
+            <ul>
+              <li>HTML, CSS, JavaScript</li>
+              <li>jQuery, Vue.js</li>
+              <li>Bootstrap, Tailwind</li>
+              <li>Responsive Design</li>
+            </ul>
+          </div>
+          <div class="skill-card">
+            <h3>Database & DevOps</h3>
+            <ul>
+              <li>MySQL</li>
+              <li>Complex Relational Queries</li>
+              <li>CI/CD Pipeline</li>
+              <li>Cloud Deployment</li>
+            </ul>
+          </div>
+          <div class="skill-card">
+            <h3>Tools & Technologies</h3>
+            <ul>
+              <li>Git Version Control</li>
+              <li>Docker</li>
+              <li>Postman</li>
+              <li>API Integration</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects">
+      <div class="container">
+        <h2 class="section-title">Featured Projects</h2>
+        <div class="projects-grid">
+          <div class="project-card">
+            <div class="project-header">📊 Inventory Sales & Accounting</div>
+            <div class="project-body">
+              <p>
+                Led the development of a comprehensive accounting system using
+                Laravel, reducing manual errors by 40%. Implemented advanced
+                inventory tracking and financial reporting features.
+              </p>
+            </div>
+          </div>
+          <div class="project-card">
+            <div class="project-header">👥 HR & Payroll Management</div>
+            <div class="project-body">
+              <p>
+                Designed an automated payroll solution integrated with biometric
+                systems, improving efficiency by 30%. Streamlined employee
+                management and attendance tracking.
+              </p>
+            </div>
+          </div>
+          <div class="project-card">
+            <div class="project-header">🔒 Visitor Management System</div>
+            <div class="project-body">
+              <p>
+                Developed a secure visitor tracking system, enhancing office
+                security protocols. Implemented real-time notifications and
+                comprehensive visitor logs.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+      <div class="container">
+        <h2 class="section-title">Let's Connect</h2>
+        <div class="contact-grid">
+          <div class="contact-card">
+            <div class="contact-icon">📧</div>
+            <h3>Email</h3>
+            <a href="mailto:ahadh32@gmail.com">ahadh32@gmail.com</a>
+          </div>
+          <div class="contact-card">
+            <div class="contact-icon">📱</div>
+            <h3>Phone</h3>
+            <a href="tel:+8801674301456">+880 1674 301456</a>
+          </div>
+          <div class="contact-card">
+            <div class="contact-icon">💼</div>
+            <h3>LinkedIn</h3>
+            <a href="https://linkedin.com/in/ahadhossain" target="_blank"
+              >linkedin.com/in/ahadhossain</a
+            >
+          </div>
+          <div class="contact-card">
+            <div class="contact-icon">📍</div>
+            <h3>Location</h3>
+            <p style="color: var(--gray)">Dhaka, Bangladesh</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <div class="container">
+        <p>
+          &copy; 2025 Ahad Hossain. All rights reserved. Built with passion and
+          code.
+        </p>
+      </div>
+    </footer>
+
+    <script>
+      // Create animated background particles
+      const bgAnimation = document.getElementById("bgAnimation");
+      for (let i = 0; i < 15; i++) {
+        const span = document.createElement("span");
+        span.style.left = Math.random() * 100 + "%";
+        span.style.animationDelay = Math.random() * 20 + "s";
+        span.style.width = span.style.height = Math.random() * 40 + 10 + "px";
+        bgAnimation.appendChild(span);
+      }
+
+      // Navbar scroll effect
+      window.addEventListener("scroll", () => {
+        const navbar = document.getElementById("navbar");
+        if (window.scrollY > 50) {
+          navbar.classList.add("scrolled");
+        } else {
+          navbar.classList.remove("scrolled");
+        }
+
+        // Reveal sections on scroll
+        const sections = document.querySelectorAll("section");
+        sections.forEach((section) => {
+          const sectionTop = section.getBoundingClientRect().top;
+          const windowHeight = window.innerHeight;
+          if (sectionTop < windowHeight * 0.75) {
+            section.classList.add("visible");
+          }
+        });
+      });
+
+      // Smooth scroll for navigation links
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener("click", function (e) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute("href"));
+          if (target) {
+            target.scrollIntoView({
+              behavior: "smooth",
+              block: "start",
+            });
+          }
+        });
+      });
+
+      // Mobile menu toggle
+      function toggleMenu() {
+        const navLinks = document.getElementById("navLinks");
+        navLinks.classList.toggle("active");
+      }
+
+      function closeMenu() {
+        const navLinks = document.getElementById("navLinks");
+        navLinks.classList.remove("active");
+      }
+
+      // Add floating animation to skill cards
+      const skillCards = document.querySelectorAll(".skill-card");
+      skillCards.forEach((card, index) => {
+        card.style.animationDelay = `${index * 0.1}s`;
+      });
+
+      // Initialize first section as visible
+      document.querySelector(".hero").classList.add("visible");
+    </script>
+  </body>
+</html>
